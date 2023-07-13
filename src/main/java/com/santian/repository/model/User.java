@@ -10,6 +10,25 @@ public class User {
     public String name;
     public String typeUser;
 
+    public User() {
+    }
+
+    public User(String name, String typeUser) {
+        this.name = name;
+        this.typeUser = typeUser;
+    }
+
+    public User(String id, String name, String typeUser) {
+
+        this.id = id;
+        this.name = name;
+        this.typeUser = typeUser;
+    }
+
+    public static User updateUser(String id, String name, String typeUser){
+        return new User(id, name, typeUser);
+    }
+
     public String getId() {
         return id;
     }

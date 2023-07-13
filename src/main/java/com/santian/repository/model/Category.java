@@ -9,6 +9,23 @@ public class Category {
     public String id;
     public String name;
 
+    public Category() {
+    }
+
+    public Category(String name) {
+        this.name = name;
+    }
+
+
+    public Category(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public static Category updateCategory(String id, String name){
+        return new Category(id, name);
+    }
+
     public String getId() {
         return id;
     }
