@@ -12,6 +12,27 @@ public class Person {
     public Long document;
     public  String typePerson;
 
+    public Person() {
+    }
+
+    public Person (String name, String lastName, Long document, String typePerson) {
+        this.name = name;
+        this.lastName = lastName;
+        this.document = document;
+        this.typePerson = typePerson;
+    }
+    public Person(String id, String name, String lastName, Long document, String typePerson) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.document = document;
+        this.typePerson = typePerson;
+    }
+
+    public static Person updatePerson(String id, String name, String lastName, Long document, String typePerson){
+        return new Person(id, name, lastName, document, typePerson);
+    }
+
     public String getId() {
         return id;
     }
