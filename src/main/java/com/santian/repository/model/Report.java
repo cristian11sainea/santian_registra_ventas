@@ -71,12 +71,12 @@ public class Report {
 
     @Override
     public String toString() {
-        return "Report{" +
-                "client='" + client + '\'' +
-                ", billingDate=" + billingDate +
-                ", quantity=" + quantity +
-                ", type='" + type + '\'' +
-                ", total=" + total +
-                '}';
+        return "{" +
+                "\"client\": \"" + client.getDocument() + "\"" +
+                ", \"product\": \"" + product.getName() + "\"" +
+                ", \"billingDate\": \"" + billingDate +
+                "\", \"quantity\": \"" + quantity +
+                "\", \"type\": \"" + type + "\"" +
+                ", \"total\": \"" + total + "\"}";
     }
 }

@@ -57,22 +57,6 @@ public class ProductRoutes {
                         .body(BodyInserters.fromPublisher(service.getTasks(), Product.class)));
     }
 
-    @Bean
-    public RouterFunction<ServerResponse> registerSale(RegisterSaleOrPurchase registerSaleOrPurchase){
-        return route(POST("route/register/sales"),
-                request -> request.body(BodyExtractors.toMono(Report.class))
-                        .flatMap(report -> registerSaleOrPurchase.apply(report))
-                        .flatMap(result -> ServerResponse.ok().bodyValue(result))
-                        .onErrorResume(error -> handler.handleException(error)));
-
-        /*RegisterSaleOrPurchase registerSaleOrPurchase
-bodyToMono(Report.class)
-        return route(POST("route/register/sales"),
-                request -> request.bodyToMono(Report.class)
-                        .flatMap(report -> registerSaleOrPurchase.apply(report))
-                        .flatMap(result -> ServerResponse.ok().bodyValue(result))
-                        .onErrorResume(error -> handler.handleException(error)));*/
-    }
 
 
 }

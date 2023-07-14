@@ -25,17 +25,16 @@ public class RegisterSaleOrPurchase implements Function<Report, Mono<Report>> {
     public Mono<Report> apply(Report report) {
         return Mono.just(report)
                 .flatMap(report1 -> {
-                 Mono<Product> pr = productRepository.findById(report1.getProduct().getId());
-                 pr
+                 productRepository.findById(report.getProduct().getId())
                  .map(product -> {
                       if (report.getType().equals("venta")) {
                           product.setAmount(product.getAmount()  - report.getQuantity());
                       }else{
                           product.setAmount(product.getAmount() + report.getQuantity());
                           }
-                      productRepository.save(product);
-                      return product;
-                  });
+
+                      return productRepository.save(product).subscribe();
+                  }).subscribe();
 
                   return Mono.just(report);
                 }).map(report1 -> {
