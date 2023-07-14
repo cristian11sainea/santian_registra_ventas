@@ -1,11 +1,15 @@
 package com.santian.routes;
 
-import com.santian.repository.ProductRepository;
 import com.santian.repository.model.Product;
+import com.santian.repository.model.Report;
+import com.santian.routes.exception.ExceptionHandler;
 import com.santian.service.ProductService;
+import com.santian.usescases.RegisterSaleOrPurchase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.BodyExtractor;
+import org.springframework.web.reactive.function.BodyExtractors;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -18,27 +22,57 @@ public class ProductRoutes {
 
     @Autowired
     private ProductService service;
+    @Autowired
+    private ExceptionHandler handler;
 
     @Bean
     public RouterFunction<ServerResponse> addProduct(){
-        return route(POST("route/save/task"),
+        return route(POST("route/save/product"),
                 request -> request.bodyToMono(Product.class)
                         .flatMap(product -> service.addProduct(product))
                         .flatMap(result -> ServerResponse.ok().bodyValue(result)));
     }
 
     @Bean
+    public RouterFunction<ServerResponse> updateProduct(){
+        return route(POST("route/update/product"),
+                request -> request.bodyToMono(Product.class)
+                        .flatMap(product -> service.updateProduct(product))
+                        .flatMap(result -> ServerResponse.ok().bodyValue(result)));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> deleteProduct(){
+        return route(DELETE("route/delete/product"),
+                request -> request.bodyToMono(Product.class)
+                        .flatMap(product -> service.deleteTask(product))
+                        .flatMap(result -> ServerResponse.ok().bodyValue(result)));
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> getProducts(){
-        return route(GET("route/get/all"),
+        return route(GET("route/get/allproducts"),
                 request -> ServerResponse
                         .ok()
                         .body(BodyInserters.fromPublisher(service.getTasks(), Product.class)));
     }
 
-    public Mono<ToDo> updateTask(int id, String newTask){
-        return toDoRepository.findById(id)
-                .switchIfEmpty(Mono.error(new IllegalArgumentException("El registro no esta en la base de datos")))
-                .flatMap(task -> toDoRepository.save(ToDo.from(newTask, id)));
+    @Bean
+    public RouterFunction<ServerResponse> registerSale(RegisterSaleOrPurchase registerSaleOrPurchase){
+        return route(POST("route/register/sales"),
+                request -> request.body(BodyExtractors.toMono(Report.class))
+                        .flatMap(report -> registerSaleOrPurchase.apply(report))
+                        .flatMap(result -> ServerResponse.ok().bodyValue(result))
+                        .onErrorResume(error -> handler.handleException(error)));
+
+        /*RegisterSaleOrPurchase registerSaleOrPurchase
+bodyToMono(Report.class)
+        return route(POST("route/register/sales"),
+                request -> request.bodyToMono(Report.class)
+                        .flatMap(report -> registerSaleOrPurchase.apply(report))
+                        .flatMap(result -> ServerResponse.ok().bodyValue(result))
+                        .onErrorResume(error -> handler.handleException(error)));*/
     }
+
 
 }

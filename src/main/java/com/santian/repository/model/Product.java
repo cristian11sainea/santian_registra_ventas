@@ -25,6 +25,10 @@ public class Product {
         this.user = user;
     }
 
+    public Product() {
+
+    }
+
     public String getId() {
         return id;
     }
