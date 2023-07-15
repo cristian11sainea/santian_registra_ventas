@@ -40,27 +40,6 @@ public class ProductService {
     }
 
 
-    public Mono<Report> reportes(Report report) {
-        return Mono.just(report)
-                .flatMap(report1 -> {
-                    Mono.just(report.getProduct())
-                            .map(product -> {
-                                if (report.getType().equals("venta")) {
-                                    product.setAmount(product.getAmount() - report.getQuantity());
-                                }else{
-                                    product.setAmount(product.getAmount() + report.getQuantity());
-                                }
-                                repository.save(product);
-                                return product;
-                            });
-
-                    return Mono.just(report);
-                }).map(report1 -> {
-                    //publisher.publishTaskCreated(report1).subscribe();
-                    return report1;
-                })
-                ;
-    }
 
 
 }

@@ -9,13 +9,13 @@ public class Product {
     @Id
     public String id;
     public String name;
-    public String category;
+    public Category category;
     public Double unitValue;
     public Double saleValue;
     public Integer amount;
-    public String user;
+    public User user;
 
-    public Product( String name, String category, Double unitValue, Double saleValue, Integer amount, String user) {
+    public Product( String name, Category category, Double unitValue, Double saleValue, Integer amount, User user) {
 
         this.name = name;
         this.category = category;
@@ -45,11 +45,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -77,11 +77,11 @@ public class Product {
         this.amount = amount;
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }
