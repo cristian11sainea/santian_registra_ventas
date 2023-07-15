@@ -1,5 +1,6 @@
 package com.santian.routes;
 
+import com.santian.repository.model.Category;
 import com.santian.repository.model.Product;
 import com.santian.repository.model.Report;
 import com.santian.routes.exception.ExceptionHandler;
@@ -24,6 +25,7 @@ public class ProductRoutes {
     private ProductService service;
     @Autowired
     private ExceptionHandler handler;
+
 
     @Bean
     public RouterFunction<ServerResponse> addProduct(){
@@ -56,7 +58,5 @@ public class ProductRoutes {
                         .ok()
                         .body(BodyInserters.fromPublisher(service.getTasks(), Product.class)));
     }
-
-
 
 }

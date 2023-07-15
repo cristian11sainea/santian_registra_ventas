@@ -2,8 +2,9 @@ package com.santian.repository.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
-@Document
+@Component
 public class Category {
     @Id
     public String id;

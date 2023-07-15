@@ -26,6 +26,7 @@ public class User {
     }
 
     public static User updateUser(String id, String name, String typeUser){
+
         return new User(id, name, typeUser);
     }
 

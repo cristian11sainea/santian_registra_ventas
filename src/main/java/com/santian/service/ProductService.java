@@ -39,7 +39,4 @@ public class ProductService {
                 .flatMap(product1 -> repository.deleteById(product.id));
     }
 
-
-
-
 }
